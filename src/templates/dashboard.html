@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Blog Template</title>
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Add custom CSS -->
+  <style>
+    /* Custom styles for the template */
+
+.container {
+  margin-top: 30px;
+}
+
+.profile-picture img {
+  max-width: 150px;
+  border-radius: 50%;
+}
+
+.user-info {
+  margin-left: 20px;
+}
+
+.posted-blogs {
+  margin-top: 30px;
+}
+
+.posted-blogs h3 {
+  margin-bottom: 15px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- User Details Section -->
+    <div class="user-details">
+      <div class="profile-picture">
+        <!-- Replace 'path_to_profile_picture' with the actual path to the user's profile picture -->
+        <img src="path_to_profile_picture" alt="Profile Picture">
+      </div>
+      <div class="user-info">
+        <h2>User Name</h2>
+        <p>Email: user@example.com</p>
+        <p>Location: City, Country</p>
+        <!-- Add more user details as needed -->
+      </div>
+    </div>
+
+    <!-- Posted Blog List Section -->
+    <div class="posted-blogs">
+      <h3>Posted Blogs</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <h4>Blog Title 1</h4>
+          <p>Posted on: Date</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <!-- Add more details of the blog post here -->
+        </li>
+        <li class="list-group-item">
+          <h4>Blog Title 2</h4>
+          <p>Posted on: Date</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <!-- Add more details of the blog post here -->
+        </li>
+        <!-- Add more blog posts as needed -->
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
+
+
+{% endblock %}

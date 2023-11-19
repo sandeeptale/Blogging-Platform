@@ -1,0 +1,167 @@
+
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <!-- Add the Font Awesome CSS link -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-iT2oWtB+7TIj3z8qei6eUr9c+H8k3Vra4kG46Y4xwZlH9hJzg/RVXYlDbOMA5zWYIaRdqZJMEbMGvGh9fW1FA==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <title>{% block title %} Welcome to blog {% endblock %}</title>
+
+  <style>
+    body {
+        font-family: 'Arial', sans-serif;
+    }
+
+    .navbar {
+        background-color: #007bff;
+    }
+
+    .navbar-brand,
+    .nav-link,
+    .dropdown-item {
+        color: #fff;
+        font-weight: bold;
+        background-color: #007bff;
+    }
+
+    .navbar-nav .nav-item {
+        margin-right: 15px;
+    }
+    .navbar-expand-lg .navbar-nav .dropdown-menu {
+    position: absolute;
+    background-color: #007bff;
+}
+    .navbar-nav .nav-item:last-child {
+        margin-right: 0;
+    }
+
+    .search-form input {
+        border: 1px solid #ccc;
+        height: 40px;
+        padding: 5px 10px;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 20px;
+    }
+
+    .search-form input:focus {
+        border-color: #1497ff !important;
+        box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.075), 0 0 8px rgba(20, 151, 255, 0.6);
+    }
+
+    .avatar {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .dropdown-menu-right {
+        right: 0;
+        left: auto;
+    }
+
+    /* Customize the footer */
+    footer {
+        background-color: #f8f9fa;
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    footer p {
+        margin-bottom: 0;
+    }
+</style>
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light  border-bottom shadow-sm" style="background-color:  #007bff;;">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <div class="container-fluid">
+            <div class="col-md-3 nav-link">
+                <h5 class="my-0 mr-md-auto font-weight-normal"><a class="text-white" href="/">My-Blogs</a></h5>
+            </div>
+            <div class="col-md-6 nav-link search-form text-center">
+                <form action="/" method="POST">
+                    {% csrf_token %}
+                    <input style="width:640px" class="form-controls pl-3 rounded" type="text" name="query" placeholder="Search"
+                    aria-label="Search">
+                </form>
+               
+            </div>
+            <div class="col-md-3 nav-link d-flex flex-row-reverse">
+                {% if request.user.is_authenticated %}
+                <ul class="navbar-nav">
+                    <img class="avatar align-self-center" src="{% if bloger.image %}{{bloger.image.url}}{% else %}{% static 'default.png' %}{% endif %}">
+                    <li class="nav-item dropdown"> 
+                        <a class="nav-link dropdown-toggle text-dark pl-1 pr-0" href="#" id="navbarDropdown"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'profile' %}">Dashboard</a>
+                            <a class="dropdown-item" href="{% url "add-blog" %}">Add Posts</a>
+                            <a class="dropdown-item" href="{% url "add_subscription" %}">Subscription</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url "log-out" %}">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+                {% else %}
+                <style>
+                   
+                </style>
+                <nav>
+                    <a class="p-2 text-dark link-st" href="{% url 'register' %}" >Register</a>
+                    <a class="p-2 text-dark link-st" href="{% url 'user-login' %}">Login</a>
+                </nav>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+</nav>
+</head>
+
+<body>
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+  {% block content %}
+  {% endblock %}
+
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

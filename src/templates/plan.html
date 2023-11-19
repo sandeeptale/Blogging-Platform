@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="px-4 py-5 my-5 text-center">
+    <div class="col-lg-5  mx-auto shadow p-3">
+        <h2>Select Plan</h2>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <form method="post">
+                {% csrf_token %}
+                
+                <select name="subscription"  class="form-select form-control mb-3">
+                        {% for i in getPlans %}
+                            <option value="{{i.id}}">{{i.plan_name}}</option>
+                        {% endfor %}
+                </select>
+               
+                <!-- Add other fields similarly -->
+
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

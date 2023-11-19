@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* Custom styles for the template */
+
+  .container {
+    margin-top: 30px;
+  }
+
+  .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-header {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    padding: 10px 20px;
+  }
+
+  .card-body p {
+    font-size: 18px;
+    margin: 5px 0;
+  }
+
+  .card-footer {
+    background-color: #f8f9fa;
+    border-radius: 0 0 10px 10px;
+    text-align: right;
+    padding: 5px 20px;
+  }
+
+  .card-footer a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .card-footer a:hover {
+    color: #0056b3;
+  }
+
+  /* Additional styles for the category filter */
+
+  .category-filter {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  .category-list {
+    flex: 1;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .category-list-item {
+    margin-bottom: 10px;
+  }
+
+  .category-list-link {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .category-list-link:hover {
+    color: #0056b3;
+  }
+
+  /* Pagination styles */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .pagination a {
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    margin: 0 5px;
+  }
+
+  .pagination .current {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="container">
+  <!-- Category Filter Section -->
+
+  <!-- Blog List Section -->
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-3">
+      <!-- Left column for category filter -->
+      <div class="category-filter">
+        <ul class="category-list">
+          <li class="category-list-item">
+            <a href="/" class="category-list-link">All Categories</a>
+          </li>
+          {% for category in all_categories %}
+          <li class="category-list-item">
+            <a href="{% url 'filter_by_category' category.id %}" class="category-list-link">{{ category.category }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <!-- Right column for blog list -->
+      <div class="row">
+        {% for m in all_blogs %}
+        <div class="col-md-12">
+          <div class="card mt-3 mb-3 shadow">
+            <div class="card-header">
+              Posted By <cite title="Source Title">{{ m.user.name }}</cite>
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>{{ m.title }}</p>
+                <footer class="blockquote-footer">
+                  <a href="{% url 'blog_view' m.id %}" class="btn btn-sm btn-primary">Read More</a>
+                </footer>
+              </blockquote>
+            </div>
+            <div class="card-footer text-muted">
+              {{ m.date }}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+          <h2>No data Found</h2>
+        {% endfor %}
+      </div>
+
+      <!-- Pagination controls -->
+      <div class="pagination mt-3 mb-4">
+        <span class="step-links">
+          {% if all_blogs.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ all_blogs.previous_page_number }}">previous</a>
+          {% endif %}
+
+       
+
+          {% if all_blogs.has_next %}
+            <a href="?page={{ all_blogs.next_page_number }}">next</a>
+            <a href="?page={{ all_blogs.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
